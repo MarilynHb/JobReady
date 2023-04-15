@@ -49,9 +49,14 @@ public class LoginActivity extends AppCompatActivity {
                                     try {
                                         JSONObject jsonObject = new JSONObject(response);
                                         int success = jsonObject.getInt("success");
-
                                         if (success == 1) {
+                                            int userId = jsonObject.getInt("id");
                                             Toast.makeText(LoginActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
+
+                                            Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+                                            intent.putExtra("userId", userId);
+                                            startActivity(intent);
+
                                         } else {
                                             Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                                         }
