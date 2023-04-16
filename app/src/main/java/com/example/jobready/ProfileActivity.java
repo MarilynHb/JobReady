@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
@@ -15,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,6 +47,32 @@ public class ProfileActivity extends AppCompatActivity {
         Integer userId = intent.getIntExtra("userId", 0);
 
         getUserDetails(userId);
+
+        //region Navigation Bar
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.about);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.about:
+                        return true;
+                    case R.id.home:
+                        //startActivity(new Intent(getApplicationContext(), Dashboard.class));
+                        //overridePendingTransition(0,0);
+                        return true;
+                    case R.id.newPost:
+                        Intent intent = new Intent(getApplicationContext(), NewPostActivity.class);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("username", tUsername.getText());
+                        startActivity(intent);
+                        return true;
+                }
+                return false;
+            }
+        });
+        //endregion
     }
 
     public void getUserDetails(Integer userId){

@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical"
-    android:padding="20dp"
+
     tools:context=".ProfileActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +46,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="30dp"
+            android:layout_marginBottom="70dp"
             android:layout_marginTop="50dp"
+            android:layout_marginHorizontal="20dp"
             app:cardElevation="20dp"
             android:background="@drawable/custom_edit_text">
 
@@ -54,7 +60,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
+                android:padding="20dp"
                 android:text="About"
                 android:textSize="20dp"
                 android:textColor="@color/celestial_blue"/>
@@ -68,4 +74,14 @@
                 android:id="@+id/profileAbout"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
- </LinearLayout>
+    </LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_navigation"
+        app:itemBackground="@color/alice_blue"
+        app:itemTextColor="@drawable/selector"
+        app:itemIconTint="@drawable/selector"
+        app:menu="@menu/menu_navigation"
+        android:layout_alignParentBottom="true"/>
+ </RelativeLayout>
