@@ -54,16 +54,20 @@ public class NewPostActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
                 switch (item.getItemId()){
                     case R.id.newPost:
                         return true;
                     case R.id.home:
-                        //startActivity(new Intent(getApplicationContext(), Dashboard.class));
-                        //overridePendingTransition(0,0);
+                        intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("username", username);
+                        startActivity(intent);
                         return true;
                     case R.id.about:
-                        Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                        intent = new Intent(getApplicationContext(), ProfileActivity.class);
                         intent.putExtra("userId", userId);
+                        intent.putExtra("username", username);
                         startActivity(intent);
                         return true;
                 }
@@ -92,6 +96,10 @@ public class NewPostActivity extends AppCompatActivity {
                                             int userId = jsonObject.getInt("id");
                                             Toast.makeText(NewPostActivity.this, "Posted", Toast.LENGTH_SHORT).show();
                                             etPostContent.setText("");
+                                            Intent intent = new Intent(NewPostActivity.this, HomeActivity.class);
+                                            intent.putExtra("userId", userId);
+                                            intent.putExtra("username", username);
+                                            startActivity(intent);
                                         } else {
                                             Toast.makeText(NewPostActivity.this, "Error Posting", Toast.LENGTH_SHORT).show();
                                         }

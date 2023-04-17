@@ -48,13 +48,15 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onResponse(String response) {
                                     try {
                                         JSONObject jsonObject = new JSONObject(response);
+                                        String username = jsonObject.getString("username");
                                         int success = jsonObject.getInt("success");
                                         if (success == 1) {
                                             int userId = jsonObject.getInt("id");
                                             Toast.makeText(LoginActivity.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
 
-                                            Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+                                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                             intent.putExtra("userId", userId);
+                                            intent.putExtra("username", username);
                                             startActivity(intent);
 
                                         } else {

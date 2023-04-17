@@ -1,9 +1,7 @@
 package com.example.jobready;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,9 +43,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Integer userId = intent.getIntExtra("userId", 0);
-
-        getUserDetails(userId);
-
+        Integer profileId = intent.getIntExtra("profileId", 0);
+        String currentUsername = intent.getStringExtra("username");
+        if(profileId != 0){
+            getUserDetails(profileId);
+        }
+        else {
+            getUserDetails(userId);
+        }
         //region Navigation Bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.about);
@@ -55,17 +58,20 @@ public class ProfileActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
                 switch (item.getItemId()){
                     case R.id.about:
                         return true;
                     case R.id.home:
-                        //startActivity(new Intent(getApplicationContext(), Dashboard.class));
-                        //overridePendingTransition(0,0);
+                        intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("username", currentUsername);
+                        startActivity(intent);
                         return true;
                     case R.id.newPost:
-                        Intent intent = new Intent(getApplicationContext(), NewPostActivity.class);
+                        intent = new Intent(getApplicationContext(), NewPostActivity.class);
                         intent.putExtra("userId", userId);
-                        intent.putExtra("username", tUsername.getText());
+                        intent.putExtra("username", currentUsername);
                         startActivity(intent);
                         return true;
                 }
