@@ -155,7 +155,9 @@ public class HomeActivity extends AppCompatActivity {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 String username = jsonObject.optString("username");
                                 String content = jsonObject.optString("content");
-                                Post post = new Post(username, content);
+                                String headline = jsonObject.optString("headline");
+
+                                Post post = new Post(username, content,headline);
                                 postList.add(post);
                                 PostAdapter postAdapter = new PostAdapter(postList, HomeActivity.this);
                                 listPostView.setAdapter(postAdapter);

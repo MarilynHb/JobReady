@@ -1,11 +1,12 @@
 package com.example.jobready.model;
 
 public class Post {
-    String username, content;
+    String username, content, headline;
 
-    public Post(String username, String content){
+    public Post(String username, String content, String headline){
         this.username = username;
         this.content = content;
+        this.headline = headline;
     }
 
     public String getUsername(){
@@ -14,4 +15,8 @@ public class Post {
     public String getContent(){
         return content;
     }
+    public String getHeadline(){
+        return headline;
+    }
+
 }

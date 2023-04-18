@@ -33,10 +33,12 @@ public class PostAdapter extends ArrayAdapter<Post> {
 
         TextView tUsername = view.findViewById(R.id.profileUsername);
         TextView tContent = view.findViewById(R.id.postContent);
+        TextView tHeadline = view.findViewById(R.id.profileHeadline);
 
         Post post = postList.get(position);
         tUsername.setText(post.getUsername());
         tContent.setText(post.getContent());
+        tHeadline.setText(post.getHeadline());
 
         return view;
     }

@@ -32,6 +32,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/payne_gray"
+                android:textSize="11dp"
+                android:id="@+id/profileHeadline"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:textColor="@color/davy_gray"
                 android:textSize="12dp"
                 android:id="@+id/postContent"/>
