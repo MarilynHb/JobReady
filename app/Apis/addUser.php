@@ -58,4 +58,3 @@ echo json_encode($response);
 // Close the connection
 $conn->close();
 ?>
-
