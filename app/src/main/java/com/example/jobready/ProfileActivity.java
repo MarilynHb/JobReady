@@ -2,6 +2,7 @@ package com.example.jobready;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private TextView tUsername, tHeadline, tLocation, tAbout;
 
-    private Button editProfileButton;
+    private Button btEditProfile, btFollowProfile;
 
 
     private String url = "http://10.0.2.2:80/JobReady/getUserDetails.php";
@@ -43,21 +44,43 @@ public class ProfileActivity extends AppCompatActivity {
         tHeadline = findViewById(R.id.profileHeadline);
         tLocation = findViewById(R.id.profileLocation);
         tAbout = findViewById(R.id.profileAbout);
-        editProfileButton = findViewById(R.id.editProfileButton);
+        btEditProfile = findViewById(R.id.editProfileButton);
+        btFollowProfile = findViewById(R.id.followProfileButton);
 
-
-
-
+        btFollowProfile.setVisibility(View.GONE);
         Intent intent = getIntent();
         Integer userId = intent.getIntExtra("userId", 0);
         Integer profileId = intent.getIntExtra("profileId", 0);
         String currentUsername = intent.getStringExtra("username");
         if(profileId != 0){
             getUserDetails(profileId);
+            btEditProfile.setVisibility(View.GONE);
+            btFollowProfile.setVisibility(View.VISIBLE);
         }
         else {
             getUserDetails(userId);
         }
+
+        //region Edit Profile
+        btEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = tUsername.getText().toString();
+                String headline = tHeadline.getText().toString();
+                String location = tLocation.getText().toString();
+                String about = tAbout.getText().toString();
+
+                    //Send Intent
+                    Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                    intent.putExtra("username", username);
+                    intent.putExtra("headline", headline);
+                    intent.putExtra("location", location);
+                    intent.putExtra("about", about);
+                    startActivity(intent);
+                }
+        });
+        //endregion
+
         //region Navigation Bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.about);
@@ -101,23 +124,20 @@ public class ProfileActivity extends AppCompatActivity {
                             String about = jsonObject.getString("about");
                             String headline = jsonObject.getString("headline");
 
-
-
-
                             tUsername.setText(username);
                             tLocation.setText(location);
                             tHeadline.setText(headline);
                             tAbout.setText(about);
 
-
-                            editProfileButton.setOnClickListener(new View.OnClickListener() {
+                            btEditProfile.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                                    intent.putExtra("Username", username);
-                                    intent.putExtra("Location", location);
-                                    intent.putExtra("About", about);
-                                    intent.putExtra("Headline", headline);
+                                    intent.putExtra("userId", userId);
+                                    intent.putExtra("username", username);
+                                    intent.putExtra("headline", headline);
+                                    intent.putExtra("location", location);
+                                    intent.putExtra("about", about);
                                     startActivity(intent);
                                 }
                             });
@@ -146,6 +166,4 @@ public class ProfileActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(ProfileActivity.this);
         requestQueue.add(stringRequest);
     }
-
-
 }
