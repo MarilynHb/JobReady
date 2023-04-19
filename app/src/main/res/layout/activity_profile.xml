@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:gravity="center"
-
     tools:context=".ProfileActivity">
 
     <LinearLayout
@@ -37,10 +37,27 @@
             android:padding="5dp"
             android:id="@+id/profileLocation"/>
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/editProfileButton"
-            android:text="Edit"/>
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/alice_blue"
+            android:textColor="@color/celestial_blue"
+            android:text="Edit"
+            android:textSize="13sp"
+            android:layout_marginHorizontal="20dp"
+            app:cornerRadius="20dp" />
+        <Button
+            android:id="@+id/followProfileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/celestial_blue"
+            android:text="Follow"
+            android:textSize="13sp"
+            android:layout_gravity="right"
+            android:layout_marginHorizontal="20dp"
+            app:cornerRadius="20dp" />
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

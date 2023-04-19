@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".EditProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:id="@+id/profileUsername"
+            android:textColor="@color/celestial_blue"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:padding="15dp"/>
+
+       <!-- <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:padding="15dp"
+            android:id="@+id/profileEmail"
+            android:hint="Email"/>-->
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:padding="15dp"
+            android:id="@+id/profileHeadline"
+            android:hint="Headline"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:padding="15dp"
+            android:id="@+id/profileLocation"
+            android:hint="Location"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!--<TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:padding="15dp"
+                android:text="Industry:      "/>-->
+
+            <!--<Spinner
+                android:id="@+id/spinnerIndustries"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:scrollbarSize="15dp" />-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="15dp"
+            android:background="@drawable/custom_edit_text"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="368dp"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:text="About"
+                    android:textColor="@color/celestial_blue"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/profileAbout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="50dp"
+                    android:background="@color/white"
+                    android:hint="Tell us more about yourself!"
+                    android:padding="20dp"
+                    android:gravity="top"
+                    android:textColor="@color/davy_gray"
+                    android:textSize="15dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/saveEdit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/celestial_blue"
+            android:text="Save"
+            android:textSize="13sp"
+            android:layout_marginHorizontal="20dp"
+            app:cornerRadius="20dp" />
+
+        <Button
+            android:id="@+id/cancelEdit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/davy_gray"
+            android:textColor="@color/alice_blue"
+            android:text="Cancel"
+            android:textSize="13sp"
+            android:layout_marginHorizontal="20dp"
+            app:cornerRadius="20dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
