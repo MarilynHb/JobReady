@@ -3,6 +3,8 @@ package com.example.jobready;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +28,8 @@ import java.util.Map;
 public class ProfileActivity extends AppCompatActivity {
 
     private TextView tUsername, tHeadline, tLocation, tAbout;
-    private String username, location, about;
+
+    private Button editProfileButton;
 
 
     private String url = "http://10.0.2.2:80/JobReady/getUserDetails.php";
@@ -40,6 +43,10 @@ public class ProfileActivity extends AppCompatActivity {
         tHeadline = findViewById(R.id.profileHeadline);
         tLocation = findViewById(R.id.profileLocation);
         tAbout = findViewById(R.id.profileAbout);
+        editProfileButton = findViewById(R.id.editProfileButton);
+
+
+
 
         Intent intent = getIntent();
         Integer userId = intent.getIntExtra("userId", 0);
@@ -95,10 +102,25 @@ public class ProfileActivity extends AppCompatActivity {
                             String headline = jsonObject.getString("headline");
 
 
+
+
                             tUsername.setText(username);
                             tLocation.setText(location);
                             tHeadline.setText(headline);
                             tAbout.setText(about);
+
+
+                            editProfileButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                                    intent.putExtra("Username", username);
+                                    intent.putExtra("Location", location);
+                                    intent.putExtra("About", about);
+                                    intent.putExtra("Headline", headline);
+                                    startActivity(intent);
+                                }
+                            });
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -124,4 +146,6 @@ public class ProfileActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(ProfileActivity.this);
         requestQueue.add(stringRequest);
     }
+
+
 }
