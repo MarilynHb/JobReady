@@ -30,8 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private TextView tUsername, tHeadline, tLocation, tAbout;
 
-    private Button btEditProfile, btFollowProfile;
-
+    private Button btEditProfile, btFollowProfile, btUnfollowProfile;
 
     private String url = "http://10.0.2.2:80/JobReady/getUserDetails.php";
 
@@ -46,13 +45,17 @@ public class ProfileActivity extends AppCompatActivity {
         tAbout = findViewById(R.id.profileAbout);
         btEditProfile = findViewById(R.id.editProfileButton);
         btFollowProfile = findViewById(R.id.followProfileButton);
+        btUnfollowProfile = findViewById(R.id.unfollowProfileButton);
 
         btFollowProfile.setVisibility(View.GONE);
+        btUnfollowProfile.setVisibility(View.GONE);
+
         Intent intent = getIntent();
         Integer userId = intent.getIntExtra("userId", 0);
         Integer profileId = intent.getIntExtra("profileId", 0);
         String currentUsername = intent.getStringExtra("username");
-        if(profileId != 0){
+
+        if(profileId != 0 && profileId != userId){
             getUserDetails(profileId);
             btEditProfile.setVisibility(View.GONE);
             btFollowProfile.setVisibility(View.VISIBLE);
@@ -70,14 +73,14 @@ public class ProfileActivity extends AppCompatActivity {
                 String location = tLocation.getText().toString();
                 String about = tAbout.getText().toString();
 
-                    //Send Intent
-                    Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                    intent.putExtra("username", username);
-                    intent.putExtra("headline", headline);
-                    intent.putExtra("location", location);
-                    intent.putExtra("about", about);
-                    startActivity(intent);
-                }
+                //Send Intent
+                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                intent.putExtra("username", username);
+                intent.putExtra("headline", headline);
+                intent.putExtra("location", location);
+                intent.putExtra("about", about);
+                startActivity(intent);
+            }
         });
         //endregion
 
@@ -109,6 +112,103 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
         //endregion
+
+        //region Follow User
+        btFollowProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String currentUserId = userId.toString();
+                final String followingId = profileId.toString();
+                ///final String industry = selectedIndustry;
+
+                String urlFollow = "http://10.0.2.2:80/JobReady/followUser.php";
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, urlFollow,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+
+                                    if(jsonObject.getInt("success") == 1) {
+                                        Toast.makeText(ProfileActivity.this, "You followed this user", Toast.LENGTH_SHORT).show();
+                                        btFollowProfile.setVisibility(View.INVISIBLE);
+                                        btUnfollowProfile.setVisibility(View.VISIBLE);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                error.printStackTrace();
+                            }
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("user_id", currentUserId);
+                        params.put("following_id", followingId);
+                        return params;
+                    }
+                };
+
+                RequestQueue requestQueue = Volley.newRequestQueue(ProfileActivity.this);
+                requestQueue.add(stringRequest);
+
+            }
+        });
+        //endregion
+
+        //region UnfFollow User
+        btUnfollowProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String currentUserId = userId.toString();
+                final String followingId = profileId.toString();
+                ///final String industry = selectedIndustry;
+
+                String urlUnfollow = "http://10.0.2.2:80/JobReady/unfollowUser.php";
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUnfollow,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+
+                                    if(jsonObject.getInt("success") == 1) {
+                                        Toast.makeText(ProfileActivity.this, "You unfollowed this user", Toast.LENGTH_SHORT).show();
+                                        btFollowProfile.setVisibility(View.VISIBLE);
+                                        btUnfollowProfile.setVisibility(View.GONE);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                error.printStackTrace();
+                            }
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("user_id", currentUserId);
+                        params.put("following_id", followingId);
+                        return params;
+                    }
+                };
+
+                RequestQueue requestQueue = Volley.newRequestQueue(ProfileActivity.this);
+                requestQueue.add(stringRequest);
+
+            }
+        });
+        //endregion
+
     }
 
     public void getUserDetails(Integer userId){
